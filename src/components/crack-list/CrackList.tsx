@@ -1,12 +1,13 @@
 import { useState, useCallback } from 'react';
 import { useCrackRecords } from '../../hooks/useCrackRecords';
+import { useToast } from '../../hooks/useToast';
 import { updateCrackRecord, deleteCrackRecord } from '../../services/firestoreService';
 import { deleteCrackImage } from '../../services/storageService';
 import { CrackCard } from './CrackCard';
 import { CrackDetailModal } from './CrackDetailModal';
 import { EmptyState } from './EmptyState';
 import { SkeletonCard } from '../ui/Skeleton';
-import { Alert } from '../ui/Alert';
+import { Toast } from '../ui/Toast';
 import type { CrackRecord, CrackEditData } from '../../types/crack';
 
 interface CrackListProps {
@@ -14,24 +15,44 @@ interface CrackListProps {
 }
 
 export function CrackList({ onGoToForm }: CrackListProps) {
-  const { records, isLoading, error, refresh, updateRecordLocally, deleteRecordLocally } = useCrackRecords();
+  const { records, isLoading, error, refresh, updateRecordLocally, deleteRecordLocally, hasMore, loadMore, totalRecords } = useCrackRecords();
   const [selectedRecord, setSelectedRecord] = useState<CrackRecord | null>(null);
+  const { toasts, removeToast, success, error: showError } = useToast();
 
   const handleUpdate = useCallback(async (id: string, data: CrackEditData) => {
-    await updateCrackRecord(id, data);
-    setSelectedRecord((prev) => (prev ? { ...prev, ...data } : null));
-    updateRecordLocally(id, data);
-  }, [updateRecordLocally]);
+    try {
+      await updateCrackRecord(id, data);
+      setSelectedRecord((prev) => (prev ? { ...prev, ...data } : null));
+      updateRecordLocally(id, data);
+      success('Record updated successfully!');
+    } catch (err) {
+      showError(err instanceof Error ? err.message : 'Failed to update record');
+    }
+  }, [updateRecordLocally, success, showError]);
 
   const handleDelete = useCallback(async (id: string, imagePath: string) => {
-    await deleteCrackImage(imagePath);
-    await deleteCrackRecord(id);
-    setSelectedRecord(null);
-    deleteRecordLocally(id);
-  }, [deleteRecordLocally]);
+    try {
+      await deleteCrackImage(imagePath);
+      await deleteCrackRecord(id);
+      setSelectedRecord(null);
+      deleteRecordLocally(id);
+      success('Record deleted successfully!');
+    } catch (err) {
+      showError(err instanceof Error ? err.message : 'Failed to delete record');
+    }
+  }, [deleteRecordLocally, success, showError]);
 
   return (
     <div className="space-y-6">
+      {/* Toast notifications */}
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -43,7 +64,8 @@ export function CrackList({ onGoToForm }: CrackListProps) {
           <div>
             <h2 className="text-xl font-semibold text-gray-900">Crack Records</h2>
             <p className="text-sm text-gray-500">
-              {records.length} record{records.length !== 1 ? 's' : ''} found
+              {totalRecords} record{totalRecords !== 1 ? 's' : ''} found
+              {records.length < totalRecords && ` (showing ${records.length})`}
             </p>
           </div>
         </div>
@@ -60,7 +82,9 @@ export function CrackList({ onGoToForm }: CrackListProps) {
       </div>
 
       {error && (
-        <Alert type="error" message={error} onDismiss={() => refresh()} />
+        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
+        </div>
       )}
 
       {isLoading ? (
@@ -76,6 +100,21 @@ export function CrackList({ onGoToForm }: CrackListProps) {
           {records.map((record) => (
             <CrackCard key={record.id} record={record} onClick={() => setSelectedRecord(record)} />
           ))}
+        </div>
+      )}
+
+      {/* Load More Button */}
+      {!isLoading && hasMore && (
+        <div className="flex justify-center pt-4">
+          <button
+            onClick={loadMore}
+            className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50"
+          >
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+            Load More
+          </button>
         </div>
       )}
 

@@ -13,6 +13,7 @@ export interface CrackRecord {
   imageName: string;
   imagePath: string;
   createdAt: Timestamp;
+  updatedAt?: Timestamp;
 }
 
 export interface CrackFormData {

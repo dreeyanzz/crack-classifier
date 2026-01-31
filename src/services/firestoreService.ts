@@ -39,7 +39,7 @@ export async function updateCrackRecord(
   data: CrackEditData
 ): Promise<void> {
   const docRef = doc(db, COLLECTION_NAME, id);
-  await updateDoc(docRef, { ...data });
+  await updateDoc(docRef, { ...data, updatedAt: serverTimestamp() });
 }
 
 export async function deleteCrackRecord(id: string): Promise<void> {

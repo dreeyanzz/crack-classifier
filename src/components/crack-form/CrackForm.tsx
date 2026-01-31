@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useCrackForm } from '../../hooks/useCrackForm';
+import { useToast } from '../../hooks/useToast';
 import { ImageUpload } from './ImageUpload';
 import { ImageNameField } from './ImageNameField';
 import { ExifInfo } from './ExifInfo';
@@ -7,7 +8,7 @@ import { ClassificationSelect } from './ClassificationSelect';
 import { LocationSelect } from './LocationSelect';
 import { FormField } from './FormField';
 import { Button } from '../ui/Button';
-import { Alert } from '../ui/Alert';
+import { Toast } from '../ui/Toast';
 
 export function CrackForm() {
   const {
@@ -30,6 +31,8 @@ export function CrackForm() {
     updateLocation,
   } = useCrackForm();
 
+  const { toasts, removeToast, success, error } = useToast();
+
   const submitLabel =
     submitStep === 'uploading'
       ? 'Uploading image...'
@@ -40,13 +43,29 @@ export function CrackForm() {
   const topRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (submitSuccess || submitError) {
+    if (submitSuccess) {
+      success('Record submitted successfully!');
+      setSubmitSuccess(false);
       topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  }, [submitSuccess, submitError]);
+    if (submitError) {
+      error(submitError);
+      setSubmitError(null);
+      topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [submitSuccess, submitError, success, error, setSubmitSuccess, setSubmitError]);
 
   return (
     <div ref={topRef} className="mx-auto max-w-2xl space-y-6">
+      {/* Toast notifications */}
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          onClose={() => removeToast(toast.id)}
+        />
+      ))}
       {/* Page heading */}
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
@@ -59,22 +78,6 @@ export function CrackForm() {
           <p className="text-sm text-gray-500">Upload a photo and fill in the details below.</p>
         </div>
       </div>
-
-      {submitSuccess && (
-        <Alert
-          type="success"
-          message="Record submitted successfully!"
-          onDismiss={() => setSubmitSuccess(false)}
-        />
-      )}
-
-      {submitError && (
-        <Alert
-          type="error"
-          message={submitError}
-          onDismiss={() => setSubmitError(null)}
-        />
-      )}
 
       <form
         onSubmit={(e) => {

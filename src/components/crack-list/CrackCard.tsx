@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { CrackRecord } from '../../types/crack';
 
 interface CrackCardProps {
@@ -13,6 +14,8 @@ const classificationConfig: Record<string, { bg: string; text: string; dot: stri
 };
 
 export function CrackCard({ record, onClick }: CrackCardProps) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  
   const config = classificationConfig[record.classification] || {
     bg: 'bg-gray-50',
     text: 'text-gray-700',
@@ -29,11 +32,22 @@ export function CrackCard({ record, onClick }: CrackCardProps) {
     >
       {/* Image */}
       <div className="relative aspect-video overflow-hidden bg-gray-100">
+        {/* Loading skeleton */}
+        {!imageLoaded && (
+          <div className="absolute inset-0 animate-pulse bg-gray-200">
+            <div className="flex h-full items-center justify-center">
+              <svg className="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M18 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75z" />
+              </svg>
+            </div>
+          </div>
+        )}
         <img
           src={record.imageUrl}
           alt={record.label}
-          className="h-full w-full object-cover transition-transform group-hover:scale-105"
+          className={`h-full w-full object-cover transition-transform group-hover:scale-105 ${!imageLoaded ? 'opacity-0' : 'opacity-100'}`}
           loading="lazy"
+          onLoad={() => setImageLoaded(true)}
         />
         {/* Classification badge on image */}
         <div className="absolute top-2.5 right-2.5">
@@ -79,6 +93,14 @@ export function CrackCard({ record, onClick }: CrackCardProps) {
               : 'N/A'}
           </div>
         </div>
+        {record.updatedAt && (
+          <div className="flex items-center gap-1 text-xs text-gray-400 pt-2 border-t border-gray-100">
+            <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+            </svg>
+            Updated {new Date(record.updatedAt.toDate()).toLocaleDateString()}
+          </div>
+        )}
       </div>
     </div>
   );
