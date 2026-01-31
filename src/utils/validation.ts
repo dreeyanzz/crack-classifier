@@ -30,10 +30,6 @@ export function validateCrackForm(
     errors.classification = 'Please select a classification';
   }
 
-  if (!data.description.trim()) {
-    errors.description = 'Description is required';
-  }
-
   if (!data.location) {
     errors.location = 'Please select a location';
   }
@@ -68,10 +64,6 @@ export function validateCrackEdit(data: CrackEditData): EditValidationErrors {
 
   if (!data.classification) {
     errors.classification = 'Please select a classification';
-  }
-
-  if (!data.description.trim()) {
-    errors.description = 'Description is required';
   }
 
   if (!data.location) {

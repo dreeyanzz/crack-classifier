@@ -29,3 +29,5 @@ export const BARANGAYS = [
 ] as const;
 
 export type Barangay = (typeof BARANGAYS)[number];
+
+export const DEFAULT_BARANGAYS: string[] = [...BARANGAYS];

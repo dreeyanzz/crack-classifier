@@ -13,6 +13,9 @@ const INITIAL_FORM_DATA: CrackFormData = {
   classification: '',
   location: '',
   datetime: '',
+  length: '',
+  width: '',
+  depth: '',
   imageName: '',
 };
 

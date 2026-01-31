@@ -9,6 +9,9 @@ export interface CrackRecord {
   classification: CrackClassification;
   location: string;
   datetime: string;
+  length: string;
+  width: string;
+  depth: string;
   imageUrl: string;
   imageName: string;
   imagePath: string;
@@ -22,6 +25,9 @@ export interface CrackFormData {
   classification: CrackClassification | '';
   location: string;
   datetime: string;
+  length: string;
+  width: string;
+  depth: string;
   imageName: string;
 }
 
@@ -31,6 +37,9 @@ export interface CrackEditData {
   classification: CrackClassification;
   location: string;
   datetime: string;
+  length: string;
+  width: string;
+  depth: string;
 }
 
 export interface ExifData {

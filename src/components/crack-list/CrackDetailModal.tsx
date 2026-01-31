@@ -34,6 +34,9 @@ export function CrackDetailModal({ record, onClose, onUpdate, onDelete }: CrackD
     classification: record.classification,
     location: record.location,
     datetime: record.datetime,
+    length: record.length || '',
+    width: record.width || '',
+    depth: record.depth || '',
   });
   const [editErrors, setEditErrors] = useState<EditValidationErrors>({});
   const [isSaving, setIsSaving] = useState(false);
@@ -48,6 +51,9 @@ export function CrackDetailModal({ record, onClose, onUpdate, onDelete }: CrackD
       classification: record.classification,
       location: record.location,
       datetime: record.datetime,
+      length: record.length || '',
+      width: record.width || '',
+      depth: record.depth || '',
     });
     setEditErrors({});
     setActionError(null);
@@ -200,6 +206,45 @@ export function CrackDetailModal({ record, onClose, onUpdate, onDelete }: CrackD
                 {fieldError(editErrors.datetime)}
               </div>
 
+              <div className="grid grid-cols-3 gap-3">
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium text-gray-700">Length (cm)</label>
+                  <input
+                    type="number"
+                    step="any"
+                    min="0"
+                    value={editData.length}
+                    onChange={(e) => updateEditField('length', e.target.value)}
+                    placeholder="0"
+                    className={inputClass()}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium text-gray-700">Width (cm)</label>
+                  <input
+                    type="number"
+                    step="any"
+                    min="0"
+                    value={editData.width}
+                    onChange={(e) => updateEditField('width', e.target.value)}
+                    placeholder="0"
+                    className={inputClass()}
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium text-gray-700">Depth (cm)</label>
+                  <input
+                    type="number"
+                    step="any"
+                    min="0"
+                    value={editData.depth}
+                    onChange={(e) => updateEditField('depth', e.target.value)}
+                    placeholder="0"
+                    className={inputClass()}
+                  />
+                </div>
+              </div>
+
               <div className="space-y-1.5">
                 <label className="text-sm font-medium text-gray-700">Description</label>
                 <textarea
@@ -275,6 +320,20 @@ export function CrackDetailModal({ record, onClose, onUpdate, onDelete }: CrackD
                   </svg>
                   {record.imageName}
                 </div>
+                {(record.length || record.width || record.depth) && (
+                  <div className="flex items-center gap-2 text-sm text-gray-600 sm:col-span-2">
+                    <svg className="h-4 w-4 flex-shrink-0 text-gray-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                    </svg>
+                    <span>
+                      {[
+                        record.length && `L: ${record.length} cm`,
+                        record.width && `W: ${record.width} cm`,
+                        record.depth && `D: ${record.depth} cm`,
+                      ].filter(Boolean).join(' / ')}
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Description */}

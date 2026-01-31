@@ -14,6 +14,7 @@ import { db } from '../config/firebase';
 import type { CrackRecord, CrackFormData, CrackEditData } from '../types/crack';
 
 const COLLECTION_NAME = 'crack_records';
+const CUSTOM_BARANGAYS_COLLECTION = 'custom_barangays';
 
 export async function addCrackRecord(
   formData: CrackFormData,
@@ -26,6 +27,9 @@ export async function addCrackRecord(
     classification: formData.classification,
     location: formData.location,
     datetime: formData.datetime,
+    length: formData.length,
+    width: formData.width,
+    depth: formData.depth,
     imageName: formData.imageName,
     imageUrl,
     imagePath,
@@ -59,4 +63,38 @@ export async function getCrackRecords(): Promise<CrackRecord[]> {
     ...doc.data(),
     createdAt: doc.data().createdAt as Timestamp,
   })) as CrackRecord[];
+}
+
+// ── Custom Barangays ──
+
+export interface CustomBarangay {
+  id: string;
+  name: string;
+  createdAt: Timestamp;
+}
+
+export async function getCustomBarangays(): Promise<CustomBarangay[]> {
+  const q = query(
+    collection(db, CUSTOM_BARANGAYS_COLLECTION),
+    orderBy('name', 'asc')
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+    name: doc.data().name as string,
+    createdAt: doc.data().createdAt as Timestamp,
+  }));
+}
+
+export async function addCustomBarangay(name: string): Promise<string> {
+  const docRef = await addDoc(collection(db, CUSTOM_BARANGAYS_COLLECTION), {
+    name,
+    createdAt: serverTimestamp(),
+  });
+  return docRef.id;
+}
+
+export async function deleteCustomBarangay(id: string): Promise<void> {
+  const docRef = doc(db, CUSTOM_BARANGAYS_COLLECTION, id);
+  await deleteDoc(docRef);
 }
