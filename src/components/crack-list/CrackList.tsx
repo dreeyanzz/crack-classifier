@@ -1,8 +1,13 @@
+import { useState, useCallback } from 'react';
 import { useCrackRecords } from '../../hooks/useCrackRecords';
+import { updateCrackRecord, deleteCrackRecord } from '../../services/firestoreService';
+import { deleteCrackImage } from '../../services/storageService';
 import { CrackCard } from './CrackCard';
+import { CrackDetailModal } from './CrackDetailModal';
 import { EmptyState } from './EmptyState';
 import { Spinner } from '../ui/Spinner';
 import { Alert } from '../ui/Alert';
+import type { CrackRecord, CrackEditData } from '../../types/crack';
 
 interface CrackListProps {
   onGoToForm?: () => void;
@@ -10,6 +15,20 @@ interface CrackListProps {
 
 export function CrackList({ onGoToForm }: CrackListProps) {
   const { records, isLoading, error, refresh } = useCrackRecords();
+  const [selectedRecord, setSelectedRecord] = useState<CrackRecord | null>(null);
+
+  const handleUpdate = useCallback(async (id: string, data: CrackEditData) => {
+    await updateCrackRecord(id, data);
+    setSelectedRecord((prev) => (prev ? { ...prev, ...data } : null));
+    await refresh();
+  }, [refresh]);
+
+  const handleDelete = useCallback(async (id: string, imagePath: string) => {
+    await deleteCrackImage(imagePath);
+    await deleteCrackRecord(id);
+    setSelectedRecord(null);
+    await refresh();
+  }, [refresh]);
 
   return (
     <div className="space-y-6">
@@ -54,9 +73,18 @@ export function CrackList({ onGoToForm }: CrackListProps) {
       ) : (
         <div className="grid grid-cols-1 gap-3 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {records.map((record) => (
-            <CrackCard key={record.id} record={record} />
+            <CrackCard key={record.id} record={record} onClick={() => setSelectedRecord(record)} />
           ))}
         </div>
+      )}
+
+      {selectedRecord && (
+        <CrackDetailModal
+          record={selectedRecord}
+          onClose={() => setSelectedRecord(null)}
+          onUpdate={handleUpdate}
+          onDelete={handleDelete}
+        />
       )}
     </div>
   );

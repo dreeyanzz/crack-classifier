@@ -2,6 +2,7 @@ import type { CrackRecord } from '../../types/crack';
 
 interface CrackCardProps {
   record: CrackRecord;
+  onClick: () => void;
 }
 
 const classificationConfig: Record<string, { bg: string; text: string; dot: string }> = {
@@ -11,7 +12,7 @@ const classificationConfig: Record<string, { bg: string; text: string; dot: stri
   Bad: { bg: 'bg-red-50', text: 'text-red-700', dot: 'bg-red-500' },
 };
 
-export function CrackCard({ record }: CrackCardProps) {
+export function CrackCard({ record, onClick }: CrackCardProps) {
   const config = classificationConfig[record.classification] || {
     bg: 'bg-gray-50',
     text: 'text-gray-700',
@@ -19,7 +20,13 @@ export function CrackCard({ record }: CrackCardProps) {
   };
 
   return (
-    <div className="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md hover:border-gray-300">
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } }}
+      className="cursor-pointer group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md hover:border-gray-300"
+    >
       {/* Image */}
       <div className="relative aspect-video overflow-hidden bg-gray-100">
         <img

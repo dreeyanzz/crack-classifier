@@ -2,13 +2,16 @@ import {
   collection,
   addDoc,
   getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
   query,
   orderBy,
   serverTimestamp,
   type Timestamp,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import type { CrackRecord, CrackFormData } from '../types/crack';
+import type { CrackRecord, CrackFormData, CrackEditData } from '../types/crack';
 
 const COLLECTION_NAME = 'crack_records';
 
@@ -29,6 +32,19 @@ export async function addCrackRecord(
     createdAt: serverTimestamp(),
   });
   return docRef.id;
+}
+
+export async function updateCrackRecord(
+  id: string,
+  data: CrackEditData
+): Promise<void> {
+  const docRef = doc(db, COLLECTION_NAME, id);
+  await updateDoc(docRef, { ...data });
+}
+
+export async function deleteCrackRecord(id: string): Promise<void> {
+  const docRef = doc(db, COLLECTION_NAME, id);
+  await deleteDoc(docRef);
 }
 
 export async function getCrackRecords(): Promise<CrackRecord[]> {

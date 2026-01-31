@@ -1,4 +1,4 @@
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { storage } from '../config/firebase';
 
 function sanitizeFilename(filename: string): string {
@@ -20,4 +20,9 @@ export async function uploadCrackImage(
   const imageUrl = await getDownloadURL(snapshot.ref);
 
   return { imageUrl, imagePath };
+}
+
+export async function deleteCrackImage(imagePath: string): Promise<void> {
+  const storageRef = ref(storage, imagePath);
+  await deleteObject(storageRef);
 }

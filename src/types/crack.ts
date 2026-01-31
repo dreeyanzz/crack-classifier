@@ -24,6 +24,14 @@ export interface CrackFormData {
   imageName: string;
 }
 
+export interface CrackEditData {
+  label: string;
+  description: string;
+  classification: CrackClassification;
+  location: string;
+  datetime: string;
+}
+
 export interface ExifData {
   datetime: Date | null;
 }
