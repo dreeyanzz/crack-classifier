@@ -10,7 +10,10 @@ export async function uploadCrackImage(
   imageName: string
 ): Promise<{ imageUrl: string; imagePath: string }> {
   const sanitized = sanitizeFilename(imageName);
-  const imagePath = `Images/${sanitized}`;
+  const timestamp = Date.now();
+  const nameWithoutExt = sanitized.replace(/\.[^/.]+$/, '');
+  const extension = sanitized.match(/\.[^/.]+$/)?.[0] || '';
+  const imagePath = `Images/${nameWithoutExt}_${timestamp}${extension}`;
   const storageRef = ref(storage, imagePath);
 
   const snapshot = await uploadBytes(storageRef, file, {

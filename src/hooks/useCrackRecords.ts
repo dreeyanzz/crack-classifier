@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { CrackRecord } from '../types/crack';
+import type { CrackRecord, CrackEditData } from '../types/crack';
 import { getCrackRecords } from '../services/firestoreService';
 
 interface UseCrackRecordsReturn {
@@ -7,6 +7,8 @@ interface UseCrackRecordsReturn {
   isLoading: boolean;
   error: string | null;
   refresh: () => Promise<void>;
+  updateRecordLocally: (id: string, data: CrackEditData) => void;
+  deleteRecordLocally: (id: string) => void;
 }
 
 export function useCrackRecords(): UseCrackRecordsReturn {
@@ -27,9 +29,21 @@ export function useCrackRecords(): UseCrackRecordsReturn {
     }
   }, []);
 
+  const updateRecordLocally = useCallback((id: string, data: CrackEditData) => {
+    setRecords((prev) => 
+      prev.map((record) => 
+        record.id === id ? { ...record, ...data } : record
+      )
+    );
+  }, []);
+
+  const deleteRecordLocally = useCallback((id: string) => {
+    setRecords((prev) => prev.filter((record) => record.id !== id));
+  }, []);
+
   useEffect(() => {
     refresh();
   }, [refresh]);
 
-  return { records, isLoading, error, refresh };
+  return { records, isLoading, error, refresh, updateRecordLocally, deleteRecordLocally };
 }

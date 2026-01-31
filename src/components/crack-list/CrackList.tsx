@@ -14,21 +14,21 @@ interface CrackListProps {
 }
 
 export function CrackList({ onGoToForm }: CrackListProps) {
-  const { records, isLoading, error, refresh } = useCrackRecords();
+  const { records, isLoading, error, refresh, updateRecordLocally, deleteRecordLocally } = useCrackRecords();
   const [selectedRecord, setSelectedRecord] = useState<CrackRecord | null>(null);
 
   const handleUpdate = useCallback(async (id: string, data: CrackEditData) => {
     await updateCrackRecord(id, data);
     setSelectedRecord((prev) => (prev ? { ...prev, ...data } : null));
-    await refresh();
-  }, [refresh]);
+    updateRecordLocally(id, data);
+  }, [updateRecordLocally]);
 
   const handleDelete = useCallback(async (id: string, imagePath: string) => {
     await deleteCrackImage(imagePath);
     await deleteCrackRecord(id);
     setSelectedRecord(null);
-    await refresh();
-  }, [refresh]);
+    deleteRecordLocally(id);
+  }, [deleteRecordLocally]);
 
   return (
     <div className="space-y-6">
