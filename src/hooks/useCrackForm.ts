@@ -23,6 +23,7 @@ export function useCrackForm() {
   const [fileExtension, setFileExtension] = useState('');
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStep, setSubmitStep] = useState<'idle' | 'uploading' | 'saving'>('idle');
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -91,12 +92,15 @@ export function useCrackForm() {
     }
 
     setIsSubmitting(true);
+    setSubmitStep('uploading');
 
     try {
       const { imageUrl, imagePath } = await uploadCrackImage(
         imageFile!,
         fullImageName
       );
+
+      setSubmitStep('saving');
 
       await addCrackRecord(
         { ...formData, imageName: fullImageName },
@@ -121,6 +125,7 @@ export function useCrackForm() {
       );
     } finally {
       setIsSubmitting(false);
+      setSubmitStep('idle');
     }
   }, [formData, fileExtension, imageFile, imagePreview, resetExif]);
 
@@ -131,6 +136,7 @@ export function useCrackForm() {
     fileExtension,
     errors,
     isSubmitting,
+    submitStep,
     isExtracting,
     submitSuccess,
     submitError,

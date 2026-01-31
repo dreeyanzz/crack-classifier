@@ -35,7 +35,7 @@ export function Alert({ type, message, onDismiss }: AlertProps) {
   const config = typeConfig[type];
 
   return (
-    <div className={`flex items-start gap-3 rounded-xl border p-4 ${config.classes}`}>
+    <div className={`flex items-start gap-3 rounded-xl border p-4 animate-[slideDown_0.3s_ease-out] ${config.classes}`}>
       <span className="flex-shrink-0 mt-px">{config.icon}</span>
       <p className="flex-1 text-sm font-medium">{message}</p>
       {onDismiss && (

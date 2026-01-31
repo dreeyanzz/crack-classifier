@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { useCrackForm } from '../../hooks/useCrackForm';
 import { ImageUpload } from './ImageUpload';
 import { ImageNameField } from './ImageNameField';
@@ -15,6 +16,7 @@ export function CrackForm() {
     fileExtension,
     errors,
     isSubmitting,
+    submitStep,
     isExtracting,
     submitSuccess,
     submitError,
@@ -28,8 +30,23 @@ export function CrackForm() {
     updateLocation,
   } = useCrackForm();
 
+  const submitLabel =
+    submitStep === 'uploading'
+      ? 'Uploading image...'
+      : submitStep === 'saving'
+        ? 'Saving record...'
+        : 'Submit Record';
+
+  const topRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (submitSuccess || submitError) {
+      topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [submitSuccess, submitError]);
+
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
+    <div ref={topRef} className="mx-auto max-w-2xl space-y-6">
       {/* Page heading */}
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
@@ -64,8 +81,26 @@ export function CrackForm() {
           e.preventDefault();
           handleSubmit();
         }}
-        className="space-y-6"
+        className="relative space-y-6"
       >
+        {/* Submit overlay */}
+        {isSubmitting && (
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-white/80 backdrop-blur-[2px]">
+            <div className="flex flex-col items-center gap-3 rounded-xl bg-white p-6 shadow-lg border border-gray-100">
+              <svg className="h-8 w-8 animate-spin text-blue-600" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+              <p className="text-sm font-medium text-gray-900">{submitLabel}</p>
+              <div className="flex items-center gap-2">
+                <div className={`h-1.5 w-1.5 rounded-full ${submitStep === 'uploading' ? 'bg-blue-600' : 'bg-green-500'}`} />
+                <span className="text-xs text-gray-500">
+                  {submitStep === 'uploading' ? 'Step 1 of 2' : 'Step 2 of 2'}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
         {/* Section 1: Photo */}
         <div className="rounded-xl border border-gray-200 bg-white p-3.5 sm:p-5 shadow-sm">
           <div className="mb-3 sm:mb-4 flex items-center gap-2 text-sm font-medium text-gray-700">
@@ -168,7 +203,7 @@ export function CrackForm() {
           <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
           </svg>
-          {isSubmitting ? 'Uploading...' : 'Submit Record'}
+          {submitLabel}
         </Button>
       </form>
     </div>

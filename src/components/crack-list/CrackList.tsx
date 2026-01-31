@@ -5,7 +5,7 @@ import { deleteCrackImage } from '../../services/storageService';
 import { CrackCard } from './CrackCard';
 import { CrackDetailModal } from './CrackDetailModal';
 import { EmptyState } from './EmptyState';
-import { Spinner } from '../ui/Spinner';
+import { SkeletonCard } from '../ui/Skeleton';
 import { Alert } from '../ui/Alert';
 import type { CrackRecord, CrackEditData } from '../../types/crack';
 
@@ -64,9 +64,10 @@ export function CrackList({ onGoToForm }: CrackListProps) {
       )}
 
       {isLoading ? (
-        <div className="flex flex-col items-center justify-center py-20">
-          <Spinner size="lg" />
-          <p className="mt-3 text-sm text-gray-500">Loading records...</p>
+        <div className="grid grid-cols-1 gap-3 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
         </div>
       ) : records.length === 0 ? (
         <EmptyState onGoToForm={onGoToForm} />
