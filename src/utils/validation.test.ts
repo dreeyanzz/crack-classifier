@@ -8,6 +8,9 @@ const validFormData: CrackFormData = {
   classification: 'Poor',
   location: 'Basak',
   datetime: '2026-01-31T08:00',
+  length: '10',
+  width: '5',
+  depth: '2',
   imageName: 'crack_photo',
 };
 
@@ -76,6 +79,9 @@ describe('validateCrackForm', () => {
       classification: '',
       location: '',
       datetime: '',
+      length: '',
+      width: '',
+      depth: '',
       imageName: '',
     };
     const errors = validateCrackForm(emptyData, false);
