@@ -1,0 +1,630 @@
+\documentclass[letterpaper, 12pt]{article}
+
+% APA 7th Edition Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\doublespacing
+\usepackage{parskip}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{caption}
+\usepackage{float}
+
+% APA 7th Heading Formatting
+\titleformat{\section}{\normalfont\bfseries\large}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\bfseries\itshape}{\thesubsubsection}{1em}{}
+
+% APA Running Head
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textsc{Crack Classifier User Manual}}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Hyperlink styling - black links for print-friendly APA format
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black
+}
+
+% Color definitions for classification badges
+\definecolor{goodgreen}{HTML}{22C55E}
+\definecolor{fairyellow}{HTML}{EAB308}
+\definecolor{poororange}{HTML}{F97316}
+\definecolor{badred}{HTML}{EF4444}
+
+% Custom command for inline colored badges
+\newcommand{\badge}[2]{\colorbox{#1}{\textcolor{white}{\small\textbf{~#2~}}}}
+
+\begin{document}
+
+% ============================================================
+% TITLE PAGE (APA 7th Format)
+% ============================================================
+\begin{titlepage}
+    \centering
+    \vspace*{2in}
+    {\LARGE\bfseries Crack Classifier User Manual \par}
+    \vspace{0.5cm}
+    {\large A Guide to Crack Documentation and Assessment \par}
+    \vspace{1.5cm}
+    {\large Crack Classifier Application \par}
+    \vspace{0.3cm}
+    {\large Version 1.0 \par}
+    \vspace{2cm}
+    {\large Mandaue City Infrastructure Monitoring \par}
+    \vspace{0.5cm}
+    {\large February 2026 \par}
+    \vfill
+\end{titlepage}
+
+% ============================================================
+% TABLE OF CONTENTS
+% ============================================================
+\newpage
+\thispagestyle{fancy}
+\tableofcontents
+\newpage
+
+% ============================================================
+% SECTION 1: INTRODUCTION
+% ============================================================
+\section{Introduction}
+
+Crack Classifier is a web-based application designed for documenting and assessing crack conditions in infrastructure within Mandaue City. The application enables users to upload photographs of cracks, record measurements and severity classifications, and maintain a searchable, cloud-based database of all assessments.
+
+This manual provides step-by-step guidance for using the Crack Classifier application. It covers submitting new crack records, browsing existing records, editing previously submitted data, and managing custom locations.
+
+\subsection{Purpose of the Application}
+
+The Crack Classifier application serves the following purposes:
+
+\begin{itemize}[leftmargin=2em]
+    \item Document and photograph crack conditions in infrastructure across Mandaue City barangays.
+    \item Classify crack severity using a standardized four-level scale.
+    \item Record precise measurements (length, width, and depth) of identified cracks.
+    \item Store all records in a cloud-based database for centralized access and long-term tracking.
+    \item Enable review, editing, and deletion of existing records as conditions change.
+\end{itemize}
+
+\subsection{Intended Users}
+
+This application is intended for infrastructure inspectors, maintenance personnel, and barangay officials responsible for monitoring and reporting structural conditions within Mandaue City.
+
+\subsection{System Requirements}
+
+To use the Crack Classifier application, users need the following:
+
+\begin{itemize}[leftmargin=2em]
+    \item A modern web browser (Google Chrome, Mozilla Firefox, Microsoft Edge, or Safari).
+    \item An active internet connection.
+    \item A device capable of capturing or uploading photographs (smartphone, tablet, or computer with camera access).
+\end{itemize}
+
+% ============================================================
+% SECTION 2: GETTING STARTED
+% ============================================================
+\section{Getting Started}
+
+\subsection{Accessing the Application}
+
+Open a web browser and navigate to the Crack Classifier application URL provided by your administrator. The application loads directly in the browser and does not require installation.
+
+\subsection{Application Layout}
+
+Upon opening the application, users will see a header bar at the top of the screen containing:
+
+\begin{itemize}[leftmargin=2em]
+    \item The application title, ``Crack Classifier,'' with the subtitle ``Crack Documentation.''
+    \item Two navigation tabs: \textbf{Submit} and \textbf{Records}.
+\end{itemize}
+
+The \textbf{Submit} tab is used to create new crack records. The \textbf{Records} tab is used to browse, view, edit, and delete existing records. Users switch between tabs by clicking the corresponding button in the header.
+
+The currently active tab is highlighted with a white sliding background and blue text for clear visual indication.
+
+% ============================================================
+% SECTION 3: SUBMITTING A NEW CRACK RECORD
+% ============================================================
+\section{Submitting a New Crack Record}
+
+To submit a new crack record, ensure the \textbf{Submit} tab is active. The page heading reads ``Submit Crack Record'' with the instruction ``Upload a photo and fill in the details below.''
+
+The submission process consists of two main sections: \textbf{Photo Upload} and \textbf{Record Details}.
+
+\subsection{Uploading a Photo}
+
+The first section of the form is the photo upload area.
+
+\subsubsection{How to Upload}
+
+Users may upload a photo in one of two ways:
+
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Click to upload}: Click anywhere within the upload area. A file browser dialog will open, allowing the user to select an image file from their device.
+    \item \textbf{Drag and drop}: Drag an image file from the computer's file explorer and drop it onto the upload area.
+\end{enumerate}
+
+\subsubsection{Accepted File Formats}
+
+The application accepts the following image formats:
+
+\begin{itemize}[leftmargin=2em]
+    \item PNG
+    \item JPG
+    \item JPEG
+\end{itemize}
+
+The maximum file size is \textbf{10 MB}. If a file exceeds this limit, an error message will be displayed.
+
+\subsubsection{Photo Preview and Replacement}
+
+After uploading, a preview of the selected image is displayed in the upload area. To replace the photo, hover over the preview image. An overlay reading ``Replace photo'' will appear. Click the overlay to select a different image.
+
+\subsubsection{Automatic Metadata Extraction}
+
+When a photo is uploaded, the application automatically scans the image file for EXIF metadata (data embedded by cameras and smartphones). During scanning, a message reading ``Scanning photo data\ldots'' is displayed.
+
+If date and time metadata is found in the photo, the \textbf{Date \& Time} field in the form will be automatically populated. Users can override this auto-filled value if needed.
+
+\subsection{Filling in Record Details}
+
+The second section of the form contains the following fields. Fields marked with a red asterisk (*) are required.
+
+\subsubsection{Label (Required)}
+
+Enter a short, descriptive name for the crack record. This label helps identify the record when browsing the records list.
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Maximum length}: 100 characters.
+    \item \textbf{Example}: ``Wall crack -- Building A''
+\end{itemize}
+
+If left blank, the error message ``Label is required'' will appear. If the label exceeds 100 characters, the message ``Label must be 100 characters or fewer'' will appear.
+
+\subsubsection{Classification (Required)}
+
+Select the severity classification of the crack from the dropdown menu. The four classification levels are:
+
+\begin{longtable}{p{2.5cm} p{1.5cm} p{8cm}}
+    \toprule
+    \textbf{Classification} & \textbf{Color} & \textbf{Description} \\
+    \midrule
+    \endhead
+    Good & \textcolor{goodgreen}{Green} & Minimal or no visible damage. The structure is in satisfactory condition. \\
+    Fair & \textcolor{fairyellow}{Yellow} & Moderate damage is present. Monitoring is recommended. \\
+    Poor & \textcolor{poororange}{Orange} & Significant damage is present. Action is recommended. \\
+    Bad & \textcolor{badred}{Red} & Severe damage is present. Urgent action is required. \\
+    \bottomrule
+\end{longtable}
+
+Each option is displayed with a corresponding color dot for quick visual identification. If no classification is selected, the error message ``Please select a classification'' will appear.
+
+\subsubsection{Location / Barangay (Required)}
+
+Select the barangay where the crack was observed. The location dropdown provides a searchable list of Mandaue City barangays.
+
+\textbf{To select a location:}
+
+\begin{enumerate}[leftmargin=2em]
+    \item Click the location dropdown. A list of barangays will appear.
+    \item Optionally, type in the search field (``Search or add barangay\ldots'') to filter the list.
+    \item Click the desired barangay to select it. A checkmark will appear next to the selected option.
+\end{enumerate}
+
+If no location is selected, the error message ``Please select a location'' will appear.
+
+For instructions on adding custom barangays, see Section~\ref{sec:custom-barangays}.
+
+\subsubsection{Date and Time (Required)}
+
+Enter the date and time when the crack was observed or photographed. If the uploaded photo contained EXIF metadata with date information, this field will be pre-filled automatically.
+
+To enter or change the date and time manually, click the date-time input field and use the browser's built-in date-time picker.
+
+If left blank, the error message ``Date and time is required'' will appear.
+
+\subsubsection{Description (Optional)}
+
+Enter any additional notes or observations about the crack condition, its surrounding area, or other relevant details. This is a multi-line text field.
+
+\textbf{Placeholder text}: ``Describe the crack condition, size, and surrounding area\ldots''
+
+\subsubsection{Dimensions (Optional)}
+
+Three optional numeric fields are available for recording crack dimensions:
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Length (cm)}: The length of the crack in centimeters.
+    \item \textbf{Width (cm)}: The width of the crack in centimeters.
+    \item \textbf{Depth (cm)}: The depth of the crack in centimeters.
+\end{itemize}
+
+These fields accept numeric values. If dimensions are not applicable or not measured, these fields may be left empty.
+
+\subsection{Submitting the Record}
+
+After completing all required fields, click the \textbf{Submit Record} button at the bottom of the form.
+
+The submission process occurs in two stages:
+
+\begin{enumerate}[leftmargin=2em]
+    \item \textbf{Step 1 of 2}: ``Uploading image\ldots'' --- The photo is uploaded to cloud storage.
+    \item \textbf{Step 2 of 2}: ``Saving record\ldots'' --- The record data is saved to the database.
+\end{enumerate}
+
+During submission, a loading overlay is displayed and the submit button is disabled to prevent duplicate submissions.
+
+\subsubsection{Successful Submission}
+
+Upon successful submission, a green notification will appear at the top of the screen reading ``Record submitted successfully!'' The form will automatically reset, clearing all fields for a new entry, and the page will scroll to the top.
+
+\subsubsection{Failed Submission}
+
+If an error occurs during submission, a red notification will appear describing the issue. The form data will be preserved so the user can correct any problems and resubmit.
+
+% ============================================================
+% SECTION 4: BROWSING CRACK RECORDS
+% ============================================================
+\section{Browsing Crack Records}
+
+To view existing crack records, click the \textbf{Records} tab in the header navigation.
+
+\subsection{Records Overview}
+
+The records page displays the heading ``Crack Records'' along with a count of total records found (e.g., ``15 records found''). If not all records are loaded, the count will also show how many are currently displayed (e.g., ``showing 12'').
+
+\subsection{Record Cards}
+
+Records are displayed as a grid of cards. The grid layout is responsive:
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Mobile devices}: 1 card per row.
+    \item \textbf{Tablets}: 2 cards per row.
+    \item \textbf{Desktop screens}: 3 cards per row.
+\end{itemize}
+
+Each card displays the following information:
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Thumbnail image}: A preview of the uploaded crack photo.
+    \item \textbf{Label}: The record's descriptive name.
+    \item \textbf{Classification badge}: A color-coded label indicating severity.
+    \item \textbf{Location}: The barangay where the crack was observed, indicated by a map pin icon.
+    \item \textbf{Description preview}: The first two lines of the description (if provided).
+    \item \textbf{Image filename}: The name of the uploaded file, indicated by an image icon.
+    \item \textbf{Date}: The date the record was created.
+    \item \textbf{Updated badge}: If the record has been edited, an ``Updated'' badge with the modification date is shown.
+\end{itemize}
+
+\subsection{Loading More Records}
+
+Records are loaded in batches of 20. If more records exist beyond the current batch, a \textbf{Load More} button appears at the bottom of the records list. Click this button to load the next 20 records.
+
+\subsection{Refreshing the Records List}
+
+To reload the records list with the latest data from the database, click the \textbf{Refresh} button located in the records header. A spinning icon indicates that data is being fetched.
+
+\subsection{Viewing a Record in Detail}
+
+Click on any record card to open a full-screen detail modal. The detail modal displays:
+
+\begin{itemize}[leftmargin=2em]
+    \item The full-size crack photograph.
+    \item The record label and classification badge.
+    \item The location (barangay).
+    \item The date and time of observation (formatted to the user's locale).
+    \item The image filename.
+    \item Dimensions, if recorded, displayed as: ``L: X cm / W: X cm / D: X cm.''
+    \item The full description text.
+\end{itemize}
+
+To close the detail modal, click the \textbf{X} button in the top-right corner or press the \textbf{Escape} key on the keyboard.
+
+% ============================================================
+% SECTION 5: EDITING A RECORD
+% ============================================================
+\section{Editing a Record}
+
+To edit an existing record, first open the record's detail modal by clicking its card in the records list (see Section 4.5).
+
+\subsection{Entering Edit Mode}
+
+In the detail modal, click the \textbf{Edit} button (pencil icon). The modal will transition to edit mode, and all fields will become editable.
+
+\subsection{Editable Fields}
+
+The following fields can be modified in edit mode:
+
+\begin{itemize}[leftmargin=2em]
+    \item Label
+    \item Classification
+    \item Location (Barangay)
+    \item Date and Time
+    \item Length, Width, and Depth (dimensions)
+    \item Description
+\end{itemize}
+
+\textbf{Note}: The uploaded photograph cannot be changed through the edit function. To use a different photo, delete the existing record and submit a new one.
+
+\subsection{Saving Changes}
+
+After making the desired changes, click the \textbf{Save Changes} button. A loading spinner will appear while the record is being updated. Upon success, the modal will return to view mode with the updated information displayed.
+
+Real-time validation is applied during editing. If any required field is left blank or contains invalid data, inline error messages will appear in red below the affected field.
+
+\subsection{Canceling an Edit}
+
+To discard changes and return to view mode without saving, click the \textbf{Cancel} button.
+
+% ============================================================
+% SECTION 6: DELETING A RECORD
+% ============================================================
+\section{Deleting a Record}
+
+To delete an existing record, first open the record's detail modal by clicking its card in the records list.
+
+\subsection{Initiating Deletion}
+
+In the detail modal, click the \textbf{Delete} button (trash icon). A red confirmation box will appear with the following warning:
+
+\begin{quote}
+    ``Are you sure you want to delete this record? This action cannot be undone.''
+\end{quote}
+
+\subsection{Confirming Deletion}
+
+To proceed with deletion, click the red \textbf{Delete} button in the confirmation box. The button text will change to ``Deleting\ldots'' while the operation is in progress. Both the record data and the associated photograph will be permanently removed from the database and cloud storage.
+
+\subsection{Canceling Deletion}
+
+To cancel and keep the record, click the \textbf{Cancel} button in the confirmation box. The modal will return to the normal detail view.
+
+\textbf{Warning}: Deletion is permanent and cannot be reversed. Ensure the correct record is selected before confirming deletion.
+
+% ============================================================
+% SECTION 7: MANAGING CUSTOM BARANGAYS
+% ============================================================
+\section{Managing Custom Barangays}
+\label{sec:custom-barangays}
+
+The application includes 27 predefined barangays for Mandaue City. Users may also add custom locations to accommodate areas not included in the default list.
+
+\subsection{Predefined Barangays}
+
+The following barangays are available by default and cannot be removed:
+
+\begin{longtable}{p{5cm} p{5cm} p{4cm}}
+    \toprule
+    \textbf{Barangay} & \textbf{Barangay} & \textbf{Barangay} \\
+    \midrule
+    \endhead
+    Alang-Alang & Jagobiao & Subangdaku \\
+    Bakilid & Labogon & Tabok \\
+    Banilad & Lo-oc & Tawason \\
+    Basak & Maguikay & Tingub \\
+    Cabancalan & Mantuyong & Tipolo \\
+    Cambaro & Opao & Umapad \\
+    Canduman & Pagsabungan & \\
+    Casili & Paknaan & \\
+    Casuntingan & & \\
+    Centro & & \\
+    Cubacub & & \\
+    Guizo & & \\
+    Ibabao-Estancia & & \\
+    \bottomrule
+\end{longtable}
+
+\subsection{Adding a Custom Barangay}
+
+To add a custom barangay:
+
+\begin{enumerate}[leftmargin=2em]
+    \item Open the location dropdown in the submission form.
+    \item Type the name of the new barangay in the search field (``Search or add barangay\ldots'').
+    \item If the typed name does not match any existing barangay, a button labeled \textbf{Add ``[name]''} will appear.
+    \item Click the \textbf{Add} button. The text will change to ``Adding\ldots'' while the new barangay is saved.
+    \item Once added, the custom barangay will appear in the list with a ``Custom'' badge and will be automatically selected.
+\end{enumerate}
+
+Custom barangays are saved to the cloud database and will be available across all future sessions.
+
+\subsection{Removing a Custom Barangay}
+
+To remove a custom barangay:
+
+\begin{enumerate}[leftmargin=2em]
+    \item Open the location dropdown.
+    \item Locate the custom barangay (identified by the ``Custom'' badge).
+    \item Click the \textbf{X} icon next to the custom barangay name.
+    \item A confirmation prompt will appear: ``Remove `[name]'?''
+    \item Click \textbf{Remove} to confirm, or \textbf{Cancel} to keep the barangay.
+\end{enumerate}
+
+\textbf{Note}: Only custom (user-added) barangays can be removed. The 27 predefined barangays are permanent and cannot be deleted.
+
+% ============================================================
+% SECTION 8: NOTIFICATIONS AND FEEDBACK
+% ============================================================
+\section{Notifications and Feedback}
+
+The application provides visual feedback to keep users informed of the status of their actions.
+
+\subsection{Toast Notifications}
+
+Toast notifications appear at the top of the screen to indicate the result of an action. Each notification automatically disappears after 5 seconds, or it can be dismissed early by clicking the close button.
+
+There are three types of toast notifications:
+
+\begin{longtable}{p{2.5cm} p{2cm} p{8cm}}
+    \toprule
+    \textbf{Type} & \textbf{Color} & \textbf{Meaning} \\
+    \midrule
+    \endhead
+    Success & Green & The action completed successfully (e.g., record submitted, record updated). \\
+    Error & Red & An error occurred (e.g., upload failed, network issue). \\
+    Information & Blue & A general informational message. \\
+    \bottomrule
+\end{longtable}
+
+\subsection{Loading Indicators}
+
+Several loading indicators are used throughout the application:
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Submission overlay}: A full-screen overlay with step indicators (``Step 1 of 2'' and ``Step 2 of 2'') during record submission.
+    \item \textbf{Skeleton cards}: Placeholder card shapes displayed while records are loading.
+    \item \textbf{Spinner icons}: Rotating icons on buttons during save, delete, or refresh operations.
+    \item \textbf{EXIF scanning message}: ``Scanning photo data\ldots'' displayed during photo metadata extraction.
+\end{itemize}
+
+\subsection{Validation Errors}
+
+When a required field is missing or invalid, an inline error message appears in red directly below the affected field. The field border also changes to red to draw attention. The following validation messages may appear:
+
+\begin{itemize}[leftmargin=2em]
+    \item ``Please upload an image''
+    \item ``Label is required''
+    \item ``Label must be 100 characters or fewer''
+    \item ``Please select a classification''
+    \item ``Please select a location''
+    \item ``Date and time is required''
+\end{itemize}
+
+% ============================================================
+% SECTION 9: CLASSIFICATION GUIDE
+% ============================================================
+\section{Classification Guide}
+
+Consistent classification is essential for meaningful infrastructure monitoring. The following guidelines describe each severity level to help users select the appropriate classification.
+
+\subsection{Good (Green)}
+
+The ``Good'' classification indicates that the structure is in satisfactory condition with minimal or no visible cracking. Minor hairline cracks that do not affect structural integrity may be present. No immediate action is required. Routine monitoring is sufficient.
+
+\subsection{Fair (Yellow)}
+
+The ``Fair'' classification indicates moderate cracking that warrants attention. Cracks may be visible and measurable but do not pose an immediate risk. Regular monitoring is recommended to track whether the condition worsens over time.
+
+\subsection{Poor (Orange)}
+
+The ``Poor'' classification indicates significant cracking that may affect the functionality or safety of the structure. Cracks are clearly visible, may be wide or deep, and could indicate underlying structural issues. Maintenance or repair action is recommended.
+
+\subsection{Bad (Red)}
+
+The ``Bad'' classification indicates severe cracking that requires urgent attention. Cracks are extensive, wide, deep, or show signs of active deterioration. The structure may pose a safety risk. Immediate action, such as professional structural assessment or emergency repair, is required.
+
+% ============================================================
+% SECTION 10: TIPS AND BEST PRACTICES
+% ============================================================
+\section{Tips and Best Practices}
+
+The following recommendations help users produce high-quality, consistent crack records.
+
+\subsection{Photography Tips}
+
+\begin{itemize}[leftmargin=2em]
+    \item Take photos in good lighting conditions to ensure crack details are clearly visible.
+    \item Include a reference object (such as a ruler or coin) in the photograph for scale, when possible.
+    \item Capture both close-up and wide-angle photos to show the crack in context.
+    \item Ensure the camera lens is clean and the image is in focus before capturing.
+    \item Enable location and date-time tagging on the device camera to automatically populate record fields through EXIF metadata.
+\end{itemize}
+
+\subsection{Record Keeping Tips}
+
+\begin{itemize}[leftmargin=2em]
+    \item Use consistent, descriptive labels that identify both the location and feature (e.g., ``East wall crack -- School Building 3'').
+    \item Always record dimensions when a measuring tool is available, as this data supports trend analysis.
+    \item Include relevant context in the description field, such as weather conditions, nearby construction activity, or previous repair history.
+    \item Classify cracks consistently by referring to the Classification Guide (Section 9) when uncertain.
+    \item Periodically revisit and update records if conditions change, using the edit function rather than creating duplicate entries.
+\end{itemize}
+
+% ============================================================
+% SECTION 11: TROUBLESHOOTING
+% ============================================================
+\section{Troubleshooting}
+
+\subsection{The Image Fails to Upload}
+
+\begin{itemize}[leftmargin=2em]
+    \item Verify that the image file is in PNG, JPG, or JPEG format.
+    \item Ensure the file size does not exceed 10 MB. If necessary, reduce the image resolution or compress the file before uploading.
+    \item Check the internet connection and try again.
+\end{itemize}
+
+\subsection{The Date and Time Field Is Not Auto-Filled}
+
+\begin{itemize}[leftmargin=2em]
+    \item Not all image files contain EXIF metadata. Photos taken with certain applications or edited images may have metadata stripped.
+    \item Enter the date and time manually using the date-time picker.
+\end{itemize}
+
+\subsection{Records Are Not Loading}
+
+\begin{itemize}[leftmargin=2em]
+    \item Click the \textbf{Refresh} button to reload records from the database.
+    \item Verify that the internet connection is active and stable.
+    \item If the issue persists, try clearing the browser cache or using a different browser.
+\end{itemize}
+
+\subsection{Form Validation Errors Appear}
+
+\begin{itemize}[leftmargin=2em]
+    \item Review all fields marked with a red border.
+    \item Read the error message below each field and provide the required information.
+    \item Ensure the label does not exceed 100 characters.
+\end{itemize}
+
+\subsection{A Record Cannot Be Edited or Deleted}
+
+\begin{itemize}[leftmargin=2em]
+    \item Ensure the internet connection is active.
+    \item If the operation fails, close the modal and try again.
+    \item If errors persist, contact the system administrator.
+\end{itemize}
+
+% ============================================================
+% SECTION 12: KEYBOARD AND ACCESSIBILITY
+% ============================================================
+\section{Keyboard Navigation and Accessibility}
+
+The Crack Classifier application supports keyboard navigation and accessibility features:
+
+\begin{itemize}[leftmargin=2em]
+    \item \textbf{Tab key}: Move focus between interactive elements (buttons, form fields, links).
+    \item \textbf{Enter or Space}: Activate the currently focused button or card.
+    \item \textbf{Escape}: Close open modals or dropdown menus.
+    \item All interactive elements have a minimum touch target size of 44 pixels for ease of use on touch devices.
+    \item Classification badges use both color and text labels to ensure information is accessible to users with color vision deficiencies.
+\end{itemize}
+
+% ============================================================
+% SECTION 13: GLOSSARY
+% ============================================================
+\section{Glossary}
+
+\begin{description}[leftmargin=2em, labelwidth=4cm, labelsep=0.5cm]
+    \item[Barangay] The smallest administrative division in the Philippines. In this application, it refers to the barangays of Mandaue City where crack assessments are conducted.
+    \item[Classification] A severity rating assigned to a crack, indicating the urgency of action required. The four levels are Good, Fair, Poor, and Bad.
+    \item[Cloud Storage] A remote data storage system accessed over the internet. The application stores photographs and records in cloud storage for centralized access.
+    \item[EXIF Metadata] Exchangeable Image File Format metadata embedded in photograph files by cameras and smartphones. This data may include the date, time, and camera settings used when the photo was taken.
+    \item[Modal] A dialog window that appears on top of the main application content. Used in this application for viewing, editing, and deleting record details.
+    \item[Toast Notification] A brief message that appears temporarily on the screen to provide feedback about the result of an action.
+\end{description}
+
+\end{document}
